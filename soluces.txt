@@ -54,8 +54,6 @@ pam_mail + crontab
 viuaaale9huek52boumoomioc
 
 // LEVEL 06
-<<<<<<< HEAD
-=======
 
 [x ${`getflag`}]
 
