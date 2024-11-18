@@ -33,6 +33,7 @@ Est-ce qu'on a les droits de creer un script dans ce repertoire ?
 Et bien oui ! Ca ne devrait pas etre compliquer alors.
 
 Creons le script `/opt/openarenaserver/script.sh`.
+
 `#!/bin/sh`
 
 `getflag > /tmp/flag`
