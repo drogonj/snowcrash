@@ -24,6 +24,10 @@ Plus qu'a essayer de s'y connecter:
 
 \>`curl localhost:4747/?x=hey`
 
+ou
+
+\>`curl -d "x=hey" localhost:4747` en passant -d (--data) a curl
+
 Sans grande surprise, `hey` est affiche dans la sortie standard.
 
 Alors comment exploiter ce script ?
