@@ -51,6 +51,10 @@ Place à l'action !
 
 `/bin/getflag`
 
+ou
+
+`#!/bin/getflag`
+
 \>`chmod +x /tmp/echo`
 
 \>`export PATH="/tmp"`
