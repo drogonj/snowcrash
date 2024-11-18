@@ -28,18 +28,40 @@ Dans **y()**, on va remplacer les "." par " x " et les "@" par " y". Pas trop d'
 On pourrait s'interesser a la suite du code mais un detail nous a echappe:
 
 `/e` est present dans la premiere expression reguliere.
-*indique que la **chaîne de remplacement** doit être interprétée comme du code PHP*
+*indique que la **chaîne de remplacement** est interprétée comme du code PHP*
 
 STOP ! La voila notre faille.
 
-`\e`, c'est ce qui permet a `y(\"\\2\")` d'etre considere comme du code PHP. Alors faisons en sorte que `\\2` contienne notre injection.
+`/e`, c'est ce qui permet a `y(\"\\2\")` d'etre considere comme du code PHP. Alors faisons en sorte que `\\2` contienne notre injection.
 
-Pour cela, on va utiliser les **backticks** "`" annoncant l'execution de commande shell.
-Mais aussi les **dollars** et **brackets** "${}" pour substituer notre variable par la commande qui s'y trouve.
+Le modificateur /e dans preg_replace est crucial car il permet l'évaluation dynamique du code PHP. Voici comment fonctionne notre exploitation :
+
+Interpolation avec `${}` :
+
+  La syntaxe `${}` en PHP permet d'**interpréter** et d'**insérer** le résultat d'une expression dans une chaîne
+        
+Dans notre cas, elle va permettre d'insérer le résultat de la commande `getflag`
+
+Backticks et exécution :
+
+  Les backticks `(``)` permettent l'exécution de commandes shell
+  
+  Le résultat de cette exécution est ensuite interpolé grâce à `${}`
 
 Voila le resultat:
 
 ``[x ${`getflag`}]``
+
+Chaîne d'exécution :
+
+    [x ${`getflag`}]
+    ↓
+    Le /e force l'évaluation de ${`getflag`} comme du code PHP
+    ↓
+    Les backticks exécutent getflag
+    ↓
+    ${} interpole le résultat dans la chaîne
+
 
 On place cela dans un fichier `/tmp/injection`, et on test.
 
