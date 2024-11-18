@@ -1,7 +1,9 @@
 # Level 01
 Toujours rien dans le `home`, on va encore partir à la recherche de fichiers appartenant cette fois-ci à **flag01**, mais rien !
 
-Après moult recherches dans la VM, on finit par s'intéresser à `/etc/passwd`
+En revanche, si on exécute un `grep "flag01"` sur les résultats des find avec l'option `-exec`, on obtient des choses intéressantes dans le fichier `/etc/passwd`
+
+`find / -type f -exec grep "flag01" {} + 2>/dev/null`
 
 ![*passwd.png*](./passwd.png)
 
