@@ -37,6 +37,16 @@ On constate donc que le programme fait un **access()**, puis se **connecte a l'h
 
 Tout cela ce passe a une grande vitesse, mais il y a quand meme une petite distance entre le **access()** et le **open()**.
 
+Dans ce cas précis, nous exploitons une vulnérabilité appelée Time-Of-Check-Time-Of-Use (TOCTOU).
+
+ Le programme présente une faille de sécurité critique dans sa séquence d'opérations :
+
+    Vérification des droits : access() vérifie les permissions
+    Délai : Un court laps de temps s'écoule
+    Utilisation : open() ouvre le fichier
+
+La vulnérabilité réside dans ce délai entre la vérification et l'utilisation. Pendant ce court instant, l'état du système peut changer.
+
 Et si on faisait une petit **brute-force** ?
 
 On a qu'a essaye, vous vous souvenez de `ln` ? Et bah on va refaire la technique du lien symbolique, mais avec une **boucle infinie** qui va alterner entre notre fichier  `/tmp/link` et `token`. Cela va se passer tellement rapidement qu'il y aura de grande chances pour que `/tmp/file` passe a `token` entre le **access()** et le **open()**. C'est parti !
