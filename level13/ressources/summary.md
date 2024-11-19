@@ -30,7 +30,7 @@ La ligne qui suit compare **%eax** (***%rax** sous forme 32-bits*) a **0x1092** 
 
 Et bien c'est plus facile qu'on pourrait l'imaginer !
 
-Une fois dans **GDB**, on peut executer la commande `break (addr)` pour mettre un breakpoint a l'execution qu'on veux.
+Une fois dans **GDB**, on peut executer la commande `break (addr)` pour mettre un breakpoint a l'execution qu'on veut.
 
 Comme par exemple `break *main+14`. De cette maniere, si on fait `run`, le programme va **faire une pause apres l'appel** a **getuid()** et **avant la comparaison**.
 
